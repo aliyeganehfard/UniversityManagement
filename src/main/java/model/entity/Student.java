@@ -15,4 +15,10 @@ public class Student extends Person{
 
     @ManyToOne
     private College college;
+
+    public Student(Integer id, String name, String city, College college) {
+        super(id, name);
+        this.city = city;
+        this.college = college;
+    }
 }
