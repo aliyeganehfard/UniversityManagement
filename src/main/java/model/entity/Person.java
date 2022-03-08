@@ -1,6 +1,7 @@
 package model.entity;
 
 import lombok.*;
+import lombok.experimental.NonFinal;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
