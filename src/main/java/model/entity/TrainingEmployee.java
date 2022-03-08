@@ -14,4 +14,9 @@ import javax.persistence.ManyToOne;
 public class TrainingEmployee extends Person{
     @ManyToOne
     private College college;
+
+    public TrainingEmployee(Integer id, String name, College college) {
+        super(id, name);
+        this.college = college;
+    }
 }
