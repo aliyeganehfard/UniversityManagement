@@ -3,10 +3,7 @@ package model.entity;
 import lombok.*;
 import lombok.experimental.NonFinal;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -19,4 +16,7 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+    @Column(unique = true)
+    private String userName;
+    private String password;
 }
