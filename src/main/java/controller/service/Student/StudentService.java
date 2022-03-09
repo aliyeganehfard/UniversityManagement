@@ -1,4 +1,4 @@
-package controller.Student;
+package controller.service.Student;
 
 import model.repository.student.StudentRepository;
 

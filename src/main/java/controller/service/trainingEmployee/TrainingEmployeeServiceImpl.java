@@ -1,6 +1,6 @@
-package controller.trainingEmployee;
+package controller.service.trainingEmployee;
 
-import controller.ServiceImpl;
+import controller.service.ServiceImpl;
 import model.entity.TrainingEmployee;
 import model.repository.trainingEmployee.TrainingEmployeeRepositoryImpl;
 

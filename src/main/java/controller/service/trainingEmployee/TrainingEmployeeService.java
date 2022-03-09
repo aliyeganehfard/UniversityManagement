@@ -1,4 +1,4 @@
-package controller.trainingEmployee;
+package controller.service.trainingEmployee;
 
 import model.repository.trainingEmployee.TrainingEmployeeRepository;
 

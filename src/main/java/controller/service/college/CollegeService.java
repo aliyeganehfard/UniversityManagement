@@ -1,4 +1,4 @@
-package controller.college;
+package controller.service.college;
 
 import model.repository.college.CollegeRepository;
 

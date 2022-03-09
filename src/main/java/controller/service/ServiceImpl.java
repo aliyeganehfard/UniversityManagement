@@ -1,4 +1,4 @@
-package controller;
+package controller.service;
 
 import lombok.NoArgsConstructor;
 import model.repository.Repository;

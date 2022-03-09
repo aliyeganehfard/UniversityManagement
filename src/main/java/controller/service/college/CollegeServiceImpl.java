@@ -1,6 +1,6 @@
-package controller.college;
+package controller.service.college;
 
-import controller.ServiceImpl;
+import controller.service.ServiceImpl;
 import model.entity.College;
 import model.repository.college.CollegeRepository;
 import model.repository.college.CollegeRepositoryImpl;

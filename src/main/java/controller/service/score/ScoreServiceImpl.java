@@ -1,6 +1,6 @@
-package controller.score;
+package controller.service.score;
 
-import controller.ServiceImpl;
+import controller.service.ServiceImpl;
 import model.entity.Score;
 import model.repository.score.ScoreRepositoryImpl;
 

@@ -1,6 +1,6 @@
-package controller.Student;
+package controller.service.Student;
 
-import controller.ServiceImpl;
+import controller.service.ServiceImpl;
 import model.entity.Score;
 import model.entity.Student;
 import model.repository.student.StudentRepositoryImpl;

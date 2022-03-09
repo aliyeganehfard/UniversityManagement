@@ -1,4 +1,4 @@
-package controller.score;
+package controller.service.score;
 
 import model.repository.score.ScoreRepository;
 

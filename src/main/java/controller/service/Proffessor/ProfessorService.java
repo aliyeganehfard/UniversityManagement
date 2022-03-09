@@ -1,4 +1,4 @@
-package controller.Proffessor;
+package controller.service.Proffessor;
 
 import model.repository.professor.ProfessorRepository;
 

@@ -1,4 +1,4 @@
-package controller;
+package controller.service;
 
 import model.repository.Repository;
 

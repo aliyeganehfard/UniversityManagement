@@ -1,4 +1,4 @@
-package controller.course;
+package controller.service.course;
 
 import model.repository.course.CourseRepository;
 
