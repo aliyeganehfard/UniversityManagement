@@ -15,8 +15,8 @@ public class TrainingEmployee extends Person{
     @ManyToOne
     private College college;
 
-    public TrainingEmployee(Integer id, String name, College college) {
-        super(id, name);
+    public TrainingEmployee(Integer id, String name, String userName, String password, College college) {
+        super(id, name, userName, password);
         this.college = college;
     }
 }
