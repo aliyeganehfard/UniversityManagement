@@ -16,8 +16,8 @@ public class Student extends Person{
     @ManyToOne
     private College college;
 
-    public Student(Integer id, String name, String city, College college) {
-        super(id, name);
+    public Student(Integer id, String name, String userName, String password, String city, College college) {
+        super(id, name, userName, password);
         this.city = city;
         this.college = college;
     }
