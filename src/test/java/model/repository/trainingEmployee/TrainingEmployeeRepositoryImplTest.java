@@ -23,8 +23,8 @@ class TrainingEmployeeRepositoryImplTest {
     @Test
     void save(){
 //        arrange
-        var college = new College(null,"azad","lar");
-        var trainingEmployee = new TrainingEmployee(null,"ali",college);
+        var college = new College(null,"azada","lar");
+        var trainingEmployee = new TrainingEmployee(null,"ali","142643","123",college);
 //        act
         collegeRepository.save(college);
         trainingEmployeeRepository.save(trainingEmployee);
@@ -44,11 +44,11 @@ class TrainingEmployeeRepositoryImplTest {
     void update(){
 //        arrange
         var college = new College(null,"azad","lar");
-        var trainingEmployee = new TrainingEmployee(null,"ali",college);
+        var trainingEmployee = new TrainingEmployee(null,"ali","12","123",college);
 //        act
         collegeRepository.save(college);
         trainingEmployeeRepository.save(trainingEmployee);
-        trainingEmployeeRepository.update(new TrainingEmployee(trainingEmployee.getId(),"majid",college));
+        trainingEmployeeRepository.update(new TrainingEmployee(trainingEmployee.getId(),"majid","123","123",college));
 //        assert
         var load = trainingEmployeeRepository.findById(TrainingEmployee.class,trainingEmployee.getId());
         assertAll(
@@ -61,7 +61,7 @@ class TrainingEmployeeRepositoryImplTest {
     void delete(){
 //        arrange
         var college = new College(null,"azad","lar");
-        var trainingEmployee = new TrainingEmployee(null,"ali",college);
+        var trainingEmployee = new TrainingEmployee(null,"ali","13","123",college);
 //        act
         collegeRepository.save(college);
         trainingEmployeeRepository.save(trainingEmployee);
@@ -81,7 +81,7 @@ class TrainingEmployeeRepositoryImplTest {
     void findById(){
 //        arrange
         var college = new College(null,"azad","lar");
-        var trainingEmployee = new TrainingEmployee(null,"ali",college);
+        var trainingEmployee = new TrainingEmployee(null,"ali","23","123",college);
 //        act
         collegeRepository.save(college);
         trainingEmployeeRepository.save(trainingEmployee);
@@ -95,7 +95,7 @@ class TrainingEmployeeRepositoryImplTest {
     void findAll(){
 //        arrange
         var college = new College(null,"azad","lar");
-        var trainingEmployee = new TrainingEmployee(null,"ali",college);
+        var trainingEmployee = new TrainingEmployee(null,"ali","1423","123",college);
 //        act
         var size = trainingEmployeeRepository.findAll(TrainingEmployee.class);
         collegeRepository.save(college);
@@ -105,5 +105,23 @@ class TrainingEmployeeRepositoryImplTest {
         Assertions
                 .assertThat(size)
                 .hasSize(trainingEmployeeRepository.findAll(TrainingEmployee.class).size());
+    }
+
+    @Test
+    void login(){
+//        arrange
+        var college = new College(null,"azad","lar");
+        var trainingEmployee = new TrainingEmployee(null,"ali","1423","123",college);
+//        act
+        collegeRepository.save(college);
+        trainingEmployeeRepository.save(trainingEmployee);
+        var login = trainingEmployeeRepository.login(TrainingEmployee.class,trainingEmployee.getUserName(),trainingEmployee.getPassword());
+//        var login = trainingEmployeeRepository.login("1423","123");
+//        assert
+        assertAll(
+                ()-> Assertions.assertThat(login).isNotNull(),
+                ()-> Assertions.assertThat(login.getUserName()).isEqualTo(trainingEmployee.getUserName()),
+                ()-> Assertions.assertThat(login.getPassword()).isEqualTo(trainingEmployee.getPassword())
+        );
     }
 }
