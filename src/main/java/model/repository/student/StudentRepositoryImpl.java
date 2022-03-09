@@ -2,6 +2,7 @@ package model.repository.student;
 
 import model.entity.Score;
 import model.entity.Student;
+import model.repository.LoginBase;
 import model.repository.RepositoryImpl;
 
 import java.util.Comparator;
@@ -16,7 +17,6 @@ public class StudentRepositoryImpl extends RepositoryImpl<Student,Integer> imple
             var transaction = session.getTransaction();
             try{
                 var hql = "FROM model.entity.Score score " +
-                        "JOIN FETCH model.entity.Student student " +
                         "WHERE score.student.id = :studentId ";
                 var query = session.createQuery(hql,Score.class);
                 query.setParameter("studentId",id);
