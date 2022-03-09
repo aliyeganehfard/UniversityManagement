@@ -1,4 +1,7 @@
 package model.repository.trainingEmployee;
 
-public interface TrainingEmployeeRepository {
+import model.entity.TrainingEmployee;
+import model.repository.LoginBase;
+
+public interface TrainingEmployeeRepository extends LoginBase<TrainingEmployee> {
 }
