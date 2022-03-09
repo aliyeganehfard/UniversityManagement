@@ -33,8 +33,8 @@ class ScoreRepositoryImplTest {
         scoreRepository = new ScoreRepositoryImpl();
 
         var college = new College(null, "azad","lar");
-        var professor = new Professor(null,"ali","b", "a", college);
-        var student = new Student(null, "a", "b", college);
+        var professor = new Professor(null,"ali","12","123","b", "a", college);
+        var student = new Student(null,"ali","44", "a", "b", college);
         var course = new Course(null,"java",2,college);
         collegeRepository.save(college);
         professorRepository.save(professor);
