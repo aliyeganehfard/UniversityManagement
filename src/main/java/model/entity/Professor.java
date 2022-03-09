@@ -18,8 +18,8 @@ public class Professor extends Person{
     @ManyToOne
     private College college;
 
-    public Professor(Integer id, String name, String degree, String office, College college) {
-        super(id, name);
+    public Professor(Integer id, String name, String userName, String password, String degree, String office, College college) {
+        super(id, name, userName, password);
         this.degree = degree;
         this.office = office;
         this.college = college;
