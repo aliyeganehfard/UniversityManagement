@@ -11,4 +11,9 @@ public class TrainingEmployeeServiceImpl extends ServiceImpl<TrainingEmployeeRep
         super(new TrainingEmployeeRepositoryImpl());
         trainingEmployeeRepository = new TrainingEmployeeRepositoryImpl();
     }
+
+    @Override
+    public TrainingEmployee login(String username, String password) {
+        return trainingEmployeeRepository.login(TrainingEmployee.class,username,password);
+    }
 }

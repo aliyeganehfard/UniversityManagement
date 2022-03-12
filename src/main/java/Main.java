@@ -36,28 +36,69 @@ public class Main {
             printLoginForm();
             commendLine = scn.nextLine().trim();
             commend = commendLine.split(" ");
-            if (commend[0].equals("login")) {
-//                if (trainingEmployeeList.login(commend[1], commend[2])) {
-                if (true) {
-                    id = commend[2];
-                    permission = 1;
-                    flag = true;
-                    printTrainingEmployeeCommend();
-//                } else if (studentList.login(commend[1], commend[2])) {
-                } else if (false) {
-                    id = commend[1];
-                    permission = 2;
-                    flag = true;
-                    printStudentCommend();
-//                } else if (professorList.login(commend[1], commend[2])) {
-                } else if (true) {
-                    id = commend[1];
-                    permission = 3;
-                    flag = true;
-                    printProfessorCommend();
-                } else {
-                    System.out.println("wrong userName or password!");
-                }
+            switch (commend[0]) {
+                case "login":
+                    trainingEmployee = trainingEmployeeService.login(TrainingEmployee.class, commend[1], commend[2]);
+                    student = studentService.login(Student.class, commend[1], commend[2]);
+                    professor = professorService.login(Professor.class, commend[1], commend[2]);
+                    if (trainingEmployee != null) {
+                        permission = 1;
+                        flag = true;
+                        printTrainingEmployeeCommend();
+                    } else if (student != null) {
+                        permission = 2;
+                        flag = true;
+                        printStudentCommend();
+                    } else if (professor != null) {
+                        permission = 3;
+                        flag = true;
+                        printProfessorCommend();
+                    } else {
+                        System.out.println("wrong userName or password!");
+                    }
+                    break;
+                case "registerCollege":
+                    try {
+                        collegeService.save(
+                                new College(
+                                        null,
+                                        commend[1],
+                                        commend[1]
+                                )
+                        );
+                    } catch (Exception e) {
+                        System.out.println("wrong input");
+                    }
+                    break;
+                case "addTrainingEmployee":
+                    try {
+                        exceptionHandler.isId(Integer.valueOf(commend[4]));
+                        college = collegeService.findById(College.class, Integer.valueOf(commend[4]));
+                        if (college == null)
+                            throw new CollegeNotFound();
+                        trainingEmployeeService.save(
+                                new TrainingEmployee(
+                                        null,
+                                        commend[1],
+                                        commend[2],
+                                        commend[3],
+                                        college
+                                )
+                        );
+                    } catch (IdException idException) {
+                        System.out.println("incorrect id");
+                    } catch (CollegeNotFound collegeNotFound) {
+                        System.out.println("college not found");
+                    } catch (Exception e) {
+                        System.out.println("wrong input");
+                    }
+                    break;
+                case "showColleges":
+                    collegeService.findAll(College.class).forEach(System.out::println);
+                    break;
+                default:
+                    System.out.println("wrong input");
+                    break;
             }
 
             while (flag) {
@@ -337,9 +378,43 @@ public class Main {
                             case "showCoursesList":
                                 courseService.findAll(Course.class).forEach(System.out::println);
                                 break;
+                            case "showProfessorList":
+                                professorService.findAll(Professor.class).forEach(System.out::println);
+                                break;
                             case "selectUnit":
+                                try{
+//                                    selectUnit professorId courseId term
+//                                    id student professor course term score
+                                    studentService.studentCourse(student).forEach(System.out::println);
+                                    exceptionHandler.isId(Integer.valueOf(commend[1]));
+                                    exceptionHandler.isId(Integer.valueOf(commend[2]));
+                                    exceptionHandler.isTerm(Integer.valueOf(commend[3]));
+                                    professor = professorService.findById(Professor.class,Integer.valueOf(commend[1]));
+                                    course = courseService.findById(Course.class,Integer.valueOf(commend[2]));
+                                    scoreService.save(
+                                            new Score(
+                                                    null,
+                                                    student,
+                                                    professor,
+                                                    course,
+                                                    Integer.valueOf(commend[3]),
+                                                    null
+                                            )
+                                    );
+                                }catch (TermException termException){
+                                    System.out.println("incorrect term");
+                                }catch (IdException idException){
+                                    System.out.println("incorrect id");
+                                }catch (ProfessorNotFound professorNotFound){
+                                    System.out.println("professor not found");
+                                }catch (CourseNotFound courseNotFound){
+                                    System.out.println("course not found");
+                                }catch (Exception e){
+                                    System.out.println("wrong input");
+                                }
                                 break;
                             case "showSelectedCourses":
+                                studentService.getResult(student).forEach(System.out::println);
                                 break;
                             case "help":
                                 printStudentCommend();
@@ -367,9 +442,10 @@ public class Main {
                                 courseService.findAll(Course.class).forEach(System.out::println);
                                 break;
                             case "showStudent":
-                                studentService.findAll(Student.class).forEach(System.out::println);
+                                professorService.getStudent(professor).forEach(System.out::println);
                                 break;
                             case "setScore":
+                                professorService.setScoreForStudent(professor).forEach(System.out::println);
                                 break;
                             case "showSalary":
                                 break;
@@ -395,7 +471,10 @@ public class Main {
     }
 
     public static void printLoginForm() {
-        System.out.println("login userName password \t {user name => studentCode || professorCode && password => nationalCode}");
+        System.out.println("login userName password ");
+        System.out.println("registerCollege name city");
+        System.out.println("addTrainingEmployee name username password collegeId");
+        System.out.println("showColleges");
         System.out.print("commend : ");
     }
 
@@ -429,7 +508,8 @@ public class Main {
     public static void printStudentCommend() {
         System.out.println("showProfile");
         System.out.println("showCoursesList");
-        System.out.println("selectUnit term courseCode... \t{ selectUnit 1-95 1 2 \" you can write multi course id \" }");
+        System.out.println("selectUnit professorId courseId term");
+        System.out.println("showProfessorList");
         System.out.println("showSelectedCourses  \t {show selected course & score & grad point average }");
         System.out.println("help");
         System.out.println("logout");
