@@ -1,10 +1,30 @@
-import model.util.SingleTonConnection;
+import controller.exception.*;
+import controller.exception.exceptionHandler.ExceptionHandlerImpl;
+import controller.service.Proffessor.ProfessorServiceImpl;
+import controller.service.Student.StudentServiceImpl;
+import controller.service.college.CollegeServiceImpl;
+import controller.service.course.CourseServiceImpl;
+import controller.service.score.ScoreServiceImpl;
+import controller.service.trainingEmployee.TrainingEmployeeServiceImpl;
+import model.entity.*;
 
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scn = new Scanner(System.in);
+        var scn = new Scanner(System.in);
+        var collegeService = new CollegeServiceImpl();
+        var professorService = new ProfessorServiceImpl();
+        var studentService = new StudentServiceImpl();
+        var trainingEmployeeService = new TrainingEmployeeServiceImpl();
+        var courseService = new CourseServiceImpl();
+        var scoreService = new ScoreServiceImpl();
+        var exceptionHandler = new ExceptionHandlerImpl();
+        Student student = null;
+        Professor professor = null;
+        TrainingEmployee trainingEmployee = null;
+        College college = null;
+        Course course = null;
         boolean flag = false;
         boolean state = true;
         int permission = -1;
@@ -48,38 +68,249 @@ public class Main {
                         commend = commendLine.split(" ");
                         switch (commend[0]) {
                             case "registerStudent":
+                                try {
+                                    exceptionHandler.isId(Integer.valueOf(commend[5]));
+                                    college = collegeService.findById(College.class, Integer.valueOf(commend[5]));
+                                    if (college == null)
+                                        throw new CollegeNotFound();
+                                    studentService.save(
+                                            new Student(
+                                                    null,
+                                                    commend[1],
+                                                    commend[2],
+                                                    commend[3],
+                                                    commend[4],
+                                                    college
+                                            )
+                                    );
+                                } catch (IdException idException) {
+                                    System.out.println("incorrect id");
+                                } catch (CollegeNotFound collegeNotFound) {
+                                    System.out.println("college not found");
+                                } catch (Exception e) {
+                                    System.out.println("wrong input");
+                                }
                                 break;
                             case "deleteStudent":
+                                try {
+                                    exceptionHandler.isId(Integer.valueOf(commend[1]));
+                                    student = studentService.findById(Student.class, Integer.valueOf(commend[1]));
+                                    if (student == null)
+                                        throw new StudentNotFound();
+                                    studentService.delete(student);
+                                } catch (IdException idException) {
+                                    System.out.println("incorrect id");
+                                } catch (StudentNotFound studentNotFound) {
+                                    System.out.println("student not found");
+                                } catch (Exception e) {
+                                    System.out.println("wrong input");
+                                }
                                 break;
                             case "editStudent":
+                                try {
+                                    exceptionHandler.isId(Integer.valueOf(commend[1]));
+                                    student = studentService.findById(Student.class, Integer.valueOf(commend[1]));
+                                    if (student == null)
+                                        throw new StudentNotFound();
+                                    student.setUserName(commend[2]);
+                                    student.setPassword(commend[3]);
+                                    studentService.update(student);
+                                } catch (IdException idException) {
+                                    System.out.println("incorrect id");
+                                } catch (StudentNotFound studentNotFound) {
+                                    System.out.println("student not found");
+                                } catch (Exception e) {
+                                    System.out.println("wrong input");
+                                }
                                 break;
                             case "registerProfessor":
+                                try {
+                                    exceptionHandler.isId(Integer.valueOf(commend[6]));
+                                    college = collegeService.findById(College.class, Integer.valueOf(commend[6]));
+                                    if (college == null)
+                                        throw new CollegeNotFound();
+                                    professorService.save(
+                                            new Professor(
+                                                    null,
+                                                    commend[1],
+                                                    commend[2],
+                                                    commend[3],
+                                                    commend[4],
+                                                    commend[5],
+                                                    college
+                                            )
+                                    );
+                                } catch (IdException idException) {
+                                    System.out.println("incorrect id");
+                                } catch (CollegeNotFound collegeNotFound) {
+                                    System.out.println("college not found");
+                                } catch (Exception e) {
+                                    System.out.println("wrong input");
+                                }
                                 break;
                             case "deleteProfessor":
+                                try {
+                                    exceptionHandler.isId(Integer.valueOf(commend[1]));
+                                    professor = professorService.findById(Professor.class, Integer.valueOf(commend[1]));
+                                    if (professor == null)
+                                        throw new ProfessorNotFound();
+                                    professorService.delete(professor);
+                                } catch (IdException idException) {
+                                    System.out.println("incorrect id");
+                                } catch (ProfessorNotFound professorNotFound) {
+                                    System.out.println("professor not found");
+                                } catch (Exception e) {
+                                    System.out.println("wrong input");
+                                }
                                 break;
                             case "editProfessor":
+                                try {
+                                    exceptionHandler.isId(Integer.valueOf(commend[1]));
+                                    professor = professorService.findById(Professor.class, Integer.valueOf(commend[1]));
+                                    if (professor == null)
+                                        throw new ProfessorNotFound();
+                                    professor.setUserName(commend[2]);
+                                    professor.setPassword(commend[3]);
+                                } catch (IdException idException) {
+                                    System.out.println("incorrect id");
+                                } catch (ProfessorNotFound professorNotFound) {
+                                    System.out.println("professor not found");
+                                } catch (Exception e) {
+                                    System.out.println("wrong input");
+                                }
                                 break;
                             case "registerTrainingEmployee":
+                                try {
+                                    exceptionHandler.isId(Integer.valueOf(commend[4]));
+                                    college = collegeService.findById(College.class, Integer.valueOf(commend[4]));
+                                    if (college == null)
+                                        throw new CollegeNotFound();
+                                    trainingEmployeeService.save(
+                                            new TrainingEmployee(
+                                                    null,
+                                                    commend[1],
+                                                    commend[2],
+                                                    commend[3],
+                                                    college
+                                            )
+                                    );
+                                } catch (IdException idException) {
+                                    System.out.println("incorrect id");
+                                } catch (CollegeNotFound collegeNotFound) {
+                                    System.out.println("college not found");
+                                } catch (Exception e) {
+                                    System.out.println("wrong input");
+                                }
                                 break;
                             case "deleteTrainingEmployee":
+                                try {
+                                    exceptionHandler.isId(Integer.valueOf(commend[1]));
+                                    trainingEmployee = trainingEmployeeService.findById(TrainingEmployee.class, Integer.valueOf(commend[1]));
+                                    if (trainingEmployee == null)
+                                        throw new TrainingEmployeeNotFound();
+                                    trainingEmployeeService.delete(trainingEmployee);
+                                } catch (TrainingEmployeeNotFound trainingEmployeeNotFound) {
+                                    System.out.println("training employee not found");
+                                } catch (IdException idException) {
+                                    System.out.println("incorrect id");
+                                } catch (Exception e) {
+                                    System.out.println("wrong input");
+                                }
                                 break;
                             case "editTrainingEmployee":
+                                System.out.println("editTrainingEmployee TrainingEmployeeId newUsername newPassword");
+                                try {
+                                    exceptionHandler.isId(Integer.valueOf(commend[1]));
+                                    trainingEmployee = trainingEmployeeService.findById(TrainingEmployee.class, Integer.valueOf(commend[1]));
+                                    if (trainingEmployee == null)
+                                        throw new TrainingEmployeeNotFound();
+                                    trainingEmployee.setUserName(commend[2]);
+                                    trainingEmployee.setPassword(commend[3]);
+                                    trainingEmployeeService.update(trainingEmployee);
+                                } catch (TrainingEmployeeNotFound trainingEmployeeNotFound) {
+                                    System.out.println("training employee not found");
+                                } catch (IdException idException) {
+                                    System.out.println("incorrect id");
+                                } catch (Exception e) {
+                                    System.out.println("wrong input");
+                                }
                                 break;
                             case "addCourse":
+                                System.out.println("addCourse name unit collegeId");
+                                try {
+                                    exceptionHandler.isId(Integer.valueOf(commend[3]));
+                                    exceptionHandler.isUnit(Integer.valueOf(commend[2]));
+                                    college = collegeService.findById(College.class, Integer.valueOf(commend[3]));
+                                    if (college == null)
+                                        throw new CollegeNotFound();
+                                    courseService.save(
+                                            new Course(
+                                                    null,
+                                                    commend[1],
+                                                    Integer.valueOf(commend[2]),
+                                                    college
+                                            )
+                                    );
+                                } catch (CollegeNotFound collegeNotFound) {
+                                    System.out.println("college not found");
+                                } catch (UnitException unitException) {
+                                    System.out.println("incorrect unit");
+                                } catch (IdException idException) {
+                                    System.out.println("incorrect id");
+                                } catch (Exception e) {
+                                    System.out.println("wrong input");
+                                }
                                 break;
                             case "deleteCourse":
+                                System.out.println("deleteCourse courseId");
+                                try {
+                                    exceptionHandler.isId(Integer.valueOf(commend[1]));
+                                    course = courseService.findById(Course.class, Integer.valueOf(commend[1]));
+                                    if (course == null)
+                                        throw new CourseNotFound();
+                                    courseService.delete(course);
+                                } catch (CourseNotFound courseNotFound) {
+                                    System.out.println("course not found");
+                                } catch (IdException idException) {
+                                    System.out.println("incorrect id");
+                                } catch (Exception e) {
+                                    System.out.println("wrong input");
+                                }
                                 break;
                             case "editCourse":
+                                System.out.println("editCourse courseId newName newUnit");
+                                try {
+                                    exceptionHandler.isId(Integer.valueOf(commend[1]));
+                                    exceptionHandler.isUnit(Integer.valueOf(commend[2]));
+                                    course = courseService.findById(Course.class, Integer.valueOf(commend[1]));
+                                    if (course == null)
+                                        throw new CourseNotFound();
+                                    course.setName(commend[2]);
+                                    course.setUnit(Integer.valueOf(commend[3]));
+                                } catch (UnitException unitException) {
+                                    System.out.println("incorrect unit");
+                                } catch (IdException idException) {
+                                    System.out.println("incorrect id");
+                                } catch (CourseNotFound courseNotFound) {
+                                    System.out.println("course not found");
+                                } catch (Exception e) {
+                                    System.out.println("wrong input");
+                                }
                                 break;
                             case "salary":
+                                System.out.println("");
                                 break;
                             case "showStudentList":
+                                studentService.findAll(Student.class).forEach(System.out::println);
                                 break;
                             case "showProfessorList":
+                                professorService.findAll(Professor.class).forEach(System.out::println);
                                 break;
                             case "showTrainingEmployeeList":
+                                trainingEmployeeService.findAll(TrainingEmployee.class).forEach(System.out::println);
                                 break;
                             case "showCourseList":
+                                courseService.findAll(Course.class).forEach(System.out::println);
                                 break;
                             case "help":
                                 printTrainingEmployeeCommend();
@@ -104,6 +335,7 @@ public class Main {
                             case "showProfile":
                                 break;
                             case "showCoursesList":
+                                courseService.findAll(Course.class).forEach(System.out::println);
                                 break;
                             case "selectUnit":
                                 break;
@@ -132,8 +364,10 @@ public class Main {
                             case "showProfile":
                                 break;
                             case "showCourses":
+                                courseService.findAll(Course.class).forEach(System.out::println);
                                 break;
                             case "showStudent":
+                                studentService.findAll(Student.class).forEach(System.out::println);
                                 break;
                             case "setScore":
                                 break;
@@ -166,21 +400,21 @@ public class Main {
     }
 
     public static void printTrainingEmployeeCommend() {
-        System.out.println("registerStudent firstName LastName nationalCode birthDate department");
-        System.out.println("{ department => COMPUTER , ACCOUNTING , ELECTRONIC , ELECTRICAL }");
-        System.out.println("deleteStudent studentCode");
-        System.out.println("editStudent studentCode newFirstName newLastName newNationalCode");
-        System.out.println("registerProfessor firstName LastName nationalCode birthDate status");
-        System.out.println("{ status => SCIENCE_COMMITTEE , TUITION_FEE}");
-        System.out.println("deleteProfessor professorCode");
-        System.out.println("editProfessor professorCode newFirstName newLastName newNationalCode");
-        System.out.println("registerTrainingEmployee firstName LastName nationalCode birthDate userName password");
-        System.out.println("deleteTrainingEmployee TrainingEmployeeCode ");
-        System.out.println("editTrainingEmployee TrainingEmployeeCode newFirstName newLastName newNationalCode");
-        System.out.println("addCourse courseCode department courseName unit professorNationalCode");
-        System.out.println("{ department => COMPUTER , ACCOUNTING , ELECTRONIC , ELECTRICAL }");
-        System.out.println("deleteCourse courseCode");
-        System.out.println("editCourse courseCode newCourseName newUnit newProfessorNationalCode");
+        System.out.println("registerStudent name username password city collegeId");
+//        System.out.println("{ department => COMPUTER , ACCOUNTING , ELECTRONIC , ELECTRICAL }");
+        System.out.println("deleteStudent studentId");
+        System.out.println("editStudent studentId newUsername newPassword");
+        System.out.println("registerProfessor name username password degree office collegeId");
+//        System.out.println("{ status => SCIENCE_COMMITTEE , TUITION_FEE}");
+        System.out.println("deleteProfessor professorId");
+        System.out.println("editProfessor professorId newUsername newPassword");
+        System.out.println("registerTrainingEmployee name username password collegeId");
+        System.out.println("deleteTrainingEmployee TrainingEmployeeId");
+        System.out.println("editTrainingEmployee TrainingEmployeeId newUsername newPassword");
+        System.out.println("addCourse name unit collegeId");
+//        System.out.println("{ department => COMPUTER , ACCOUNTING , ELECTRONIC , ELECTRICAL }");
+        System.out.println("deleteCourse courseId");
+        System.out.println("editCourse courseId newName newUnit");
         System.out.println("salary");
         System.out.println("showStudentList");
         System.out.println("showProfessorList");
