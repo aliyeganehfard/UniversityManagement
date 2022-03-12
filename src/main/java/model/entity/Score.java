@@ -8,7 +8,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 @Entity
 public class Score {
     @Id
@@ -22,4 +21,17 @@ public class Score {
     private Course course;
     private Integer term;
     private Double score;
+
+
+    @Override
+    public String toString() {
+        return "Score{" +
+                "id=" + id +
+                ", student=" + student +
+                ", professor=" + professor +
+                ", course=" + course +
+                ", term=" + term +
+                ", score=" + score +
+                '}';
+    }
 }

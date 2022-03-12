@@ -25,6 +25,8 @@ public class Main {
         TrainingEmployee trainingEmployee = null;
         College college = null;
         Course course = null;
+        Score score = null;
+
         boolean flag = false;
         boolean state = true;
         int permission = -1;
@@ -94,7 +96,11 @@ public class Main {
                     }
                     break;
                 case "showColleges":
-                    collegeService.findAll(College.class).forEach(System.out::println);
+                    try {
+                        collegeService.findAll(College.class).forEach(System.out::println);
+                    } catch (Exception e) {
+                    }
+
                     break;
                 default:
                     System.out.println("wrong input");
@@ -108,6 +114,9 @@ public class Main {
                         commendLine = scn.nextLine().trim();
                         commend = commendLine.split(" ");
                         switch (commend[0]) {
+                            case "showProfile":
+                                System.out.println(trainingEmployeeService.findById(TrainingEmployee.class, trainingEmployee.getId()));
+                                break;
                             case "registerStudent":
                                 try {
                                     exceptionHandler.isId(Integer.valueOf(commend[5]));
@@ -259,7 +268,6 @@ public class Main {
                                 }
                                 break;
                             case "editTrainingEmployee":
-                                System.out.println("editTrainingEmployee TrainingEmployeeId newUsername newPassword");
                                 try {
                                     exceptionHandler.isId(Integer.valueOf(commend[1]));
                                     trainingEmployee = trainingEmployeeService.findById(TrainingEmployee.class, Integer.valueOf(commend[1]));
@@ -277,7 +285,6 @@ public class Main {
                                 }
                                 break;
                             case "addCourse":
-                                System.out.println("addCourse name unit collegeId");
                                 try {
                                     exceptionHandler.isId(Integer.valueOf(commend[3]));
                                     exceptionHandler.isUnit(Integer.valueOf(commend[2]));
@@ -342,16 +349,39 @@ public class Main {
                                 System.out.println("");
                                 break;
                             case "showStudentList":
-                                studentService.findAll(Student.class).forEach(System.out::println);
+                                try {
+                                    studentService.findAll(Student.class).forEach(System.out::println);
+                                } catch (Exception e) {
+                                }
+
                                 break;
                             case "showProfessorList":
-                                professorService.findAll(Professor.class).forEach(System.out::println);
+                                try {
+                                    professorService.findAll(Professor.class).forEach(System.out::println);
+                                } catch (Exception e) {
+                                }
+
                                 break;
                             case "showTrainingEmployeeList":
-                                trainingEmployeeService.findAll(TrainingEmployee.class).forEach(System.out::println);
+                                try {
+                                    trainingEmployeeService.findAll(TrainingEmployee.class).forEach(System.out::println);
+                                } catch (Exception e) {
+                                }
+
                                 break;
                             case "showCourseList":
-                                courseService.findAll(Course.class).forEach(System.out::println);
+                                try {
+                                    courseService.findAll(Course.class).forEach(System.out::println);
+                                } catch (Exception e) {
+                                }
+
+                                break;
+                            case "showColleges":
+                                try {
+                                    collegeService.findAll(College.class).forEach(System.out::println);
+                                } catch (Exception e) {
+                                }
+
                                 break;
                             case "help":
                                 printTrainingEmployeeCommend();
@@ -374,23 +404,37 @@ public class Main {
                         commend = commendLine.split(" ");
                         switch (commend[0]) {
                             case "showProfile":
+                                System.out.println(studentService.findById(Student.class, student.getId()));
                                 break;
                             case "showCoursesList":
-                                courseService.findAll(Course.class).forEach(System.out::println);
+                                try {
+                                    courseService.findAll(Course.class).forEach(System.out::println);
+                                } catch (Exception e) {
+                                }
+
                                 break;
                             case "showProfessorList":
-                                professorService.findAll(Professor.class).forEach(System.out::println);
+                                try {
+                                    professorService.findAll(Professor.class).forEach(System.out::println);
+                                } catch (Exception e) {
+                                }
                                 break;
                             case "selectUnit":
-                                try{
-//                                    selectUnit professorId courseId term
-//                                    id student professor course term score
+                                try {
                                     studentService.studentCourse(student).forEach(System.out::println);
+                                }catch (Exception e){}
+
+                                try {
+
                                     exceptionHandler.isId(Integer.valueOf(commend[1]));
                                     exceptionHandler.isId(Integer.valueOf(commend[2]));
                                     exceptionHandler.isTerm(Integer.valueOf(commend[3]));
-                                    professor = professorService.findById(Professor.class,Integer.valueOf(commend[1]));
-                                    course = courseService.findById(Course.class,Integer.valueOf(commend[2]));
+                                    professor = professorService.findById(Professor.class, Integer.valueOf(commend[1]));
+                                    course = courseService.findById(Course.class, Integer.valueOf(commend[2]));
+                                    student = studentService.findById(Student.class, student.getId());
+                                    System.out.println(student);
+                                    System.out.println(course);
+                                    System.out.println(professor);
                                     scoreService.save(
                                             new Score(
                                                     null,
@@ -401,20 +445,25 @@ public class Main {
                                                     null
                                             )
                                     );
-                                }catch (TermException termException){
+                                } catch (TermException termException) {
                                     System.out.println("incorrect term");
-                                }catch (IdException idException){
+                                } catch (IdException idException) {
                                     System.out.println("incorrect id");
-                                }catch (ProfessorNotFound professorNotFound){
+                                } catch (ProfessorNotFound professorNotFound) {
                                     System.out.println("professor not found");
-                                }catch (CourseNotFound courseNotFound){
+                                } catch (CourseNotFound courseNotFound) {
                                     System.out.println("course not found");
-                                }catch (Exception e){
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                     System.out.println("wrong input");
                                 }
                                 break;
                             case "showSelectedCourses":
-                                studentService.getResult(student).forEach(System.out::println);
+                                try {
+                                    studentService.getResult(student).forEach(System.out::println);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                                 break;
                             case "help":
                                 printStudentCommend();
@@ -444,8 +493,27 @@ public class Main {
                             case "showStudent":
                                 professorService.getStudent(professor).forEach(System.out::println);
                                 break;
-                            case "setScore":
+                            case "showWaitingStudentForeScore":
                                 professorService.setScoreForStudent(professor).forEach(System.out::println);
+                                break;
+                            case "setScore":
+                                try {
+                                    exceptionHandler.isId(Integer.valueOf(commend[1]));
+//                                    exceptionHandler.isScore(Double.valueOf(commend[2]));
+                                    score = scoreService.findById(Score.class, Integer.valueOf(commend[1]));
+                                    if (score == null)
+                                        throw new ScoreNotFound();
+                                    score.setScore(Double.valueOf(commend[2]));
+                                    scoreService.update(score);
+                                } catch (ScoreNotFound scoreException) {
+                                    System.out.println("score not fouond");
+                                } catch (IdException idException) {
+                                    System.out.println("incorrect id");
+                                } catch (ScoreException scoreException) {
+                                    System.out.println("incorrect score");
+                                } catch (Exception e) {
+                                    System.out.println("wrong input");
+                                }
                                 break;
                             case "showSalary":
                                 break;
@@ -479,6 +547,7 @@ public class Main {
     }
 
     public static void printTrainingEmployeeCommend() {
+        System.out.println("showProfile");
         System.out.println("registerStudent name username password city collegeId");
 //        System.out.println("{ department => COMPUTER , ACCOUNTING , ELECTRONIC , ELECTRICAL }");
         System.out.println("deleteStudent studentId");
@@ -495,6 +564,7 @@ public class Main {
         System.out.println("deleteCourse courseId");
         System.out.println("editCourse courseId newName newUnit");
         System.out.println("salary");
+        System.out.println("showColleges");
         System.out.println("showStudentList");
         System.out.println("showProfessorList");
         System.out.println("showTrainingEmployeeList");
@@ -510,7 +580,7 @@ public class Main {
         System.out.println("showCoursesList");
         System.out.println("selectUnit professorId courseId term");
         System.out.println("showProfessorList");
-        System.out.println("showSelectedCourses  \t {show selected course & score & grad point average }");
+        System.out.println("showSelectedCourses");
         System.out.println("help");
         System.out.println("logout");
         System.out.println("exit");
@@ -520,8 +590,9 @@ public class Main {
         System.out.println("showProfile");
         System.out.println("showCourses");
         System.out.println("showStudent");
-        System.out.println("setScore courseCode studentNationalCode score");
+        System.out.println("setScore scoreId score");
         System.out.println("showSalary term");
+        System.out.println("showWaitingStudentForeScore");
         System.out.println("help");
         System.out.println("logout");
         System.out.println("exit");

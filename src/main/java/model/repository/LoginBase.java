@@ -25,8 +25,8 @@ public interface LoginBase<T extends Person> {
                          .where(criteriaBuilder.and(userNameEqual,passwordEqual));
                  return session.createQuery(query).getSingleResult();
              }catch (NoResultException e){
-                 transaction.rollback();
-                 e.printStackTrace();
+//                 transaction.rollback();
+//                 e.printStackTrace();
              }
          }
          return null;

@@ -62,10 +62,19 @@ public class StudentServiceImpl extends ServiceImpl<StudentRepositoryImpl, Stude
 
     @Override
     public List<Score> getResult(Student student) {
-        return scoreService.findAll(Score.class)
-                .stream()
-                .filter(score -> score.getStudent().getUserName().equals(student.getUserName()))
-                .sorted(Comparator.comparing(Score::getTerm))
-                .collect(Collectors.toList());
+//        System.out.println(student.getUserName());
+//        scoreService.findAll(Score.class).forEach(System.out::println);
+        List<Score> scoreList = scoreService.findAll(Score.class);
+        for (Score s : scoreList) {
+            System.out.println("++++ " + s);
+            System.out.println("----- "+ s.getStudent().getId() );
+            if (s.getStudent().getPassword().equals("ali1"))
+                System.out.println(s);
+        }
+//                .filter(score -> score.getStudent().getPassword().equals("ali1"))
+//                .filter(score -> score.getStudent().getUserName().equals(student.getUserName()))
+//                .sorted(Comparator.comparing(Score::getTerm))
+//                .collect(Collectors.toList());
+        return null;
     }
 }

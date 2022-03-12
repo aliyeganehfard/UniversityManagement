@@ -9,7 +9,6 @@ import javax.persistence.ManyToOne;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Entity
 public class Professor extends Person{
     private String degree;
@@ -23,5 +22,15 @@ public class Professor extends Person{
         this.degree = degree;
         this.office = office;
         this.college = college;
+    }
+
+    @Override
+    public String toString() {
+        return "Professor{" +
+                super.toString()+
+                "degree='" + degree + '\'' +
+                ", office='" + office + '\'' +
+                ", college=" + college +
+                '}';
     }
 }

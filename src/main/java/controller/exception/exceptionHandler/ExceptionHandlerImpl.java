@@ -18,7 +18,7 @@ public class ExceptionHandlerImpl implements ExceptionHandler {
 
         DoubleStream.of(score)
                 .forEach(value -> {
-                    if (value > 20 || value < 0)
+                    if (value < 20 || value > 0)
                         throw new ScoreException();
                 });
     }
