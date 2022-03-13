@@ -23,7 +23,7 @@ class CourseRepositoryImplTest {
     void save(){
 //        arrange
         var college = new College(null,"azad","tehran");
-        var course = new Course(null,"java",2,college);
+        var course = new Course(null,"go",2,college);
 //        act
          collegeRepository.save(college);
          courseRepository.save(course);

@@ -8,7 +8,7 @@
         <property name="connection.username">postgres</property>
         <property name="connection.password">ali.1381</property>
 
-        <property name="hibernate.hbm2ddl.auto">create-drop</property> <!-- Generates Database Schema. Do not Use In PRODUCTION! -->
+        <property name="hibernate.hbm2ddl.auto">update</property> <!-- Generates Database Schema. Do not Use In PRODUCTION! -->
         <property name="show_sql">true</property>
     </session-factory>
 </hibernate-configuration>

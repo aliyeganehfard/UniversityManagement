@@ -458,9 +458,12 @@ public class Main {
                                     System.out.println("wrong input");
                                 }
                                 break;
+                            case "mustSelect":
+                                studentService.studentCourse(student).forEach(System.out::println);
+                                break;
                             case "showSelectedCourses":
                                 try {
-                                    studentService.getResult(student).forEach(System.out::println);
+                                    studentService.getStudentCourse(student.getId()).forEach(System.out::println);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -499,7 +502,6 @@ public class Main {
                             case "setScore":
                                 try {
                                     exceptionHandler.isId(Integer.valueOf(commend[1]));
-//                                    exceptionHandler.isScore(Double.valueOf(commend[2]));
                                     score = scoreService.findById(Score.class, Integer.valueOf(commend[1]));
                                     if (score == null)
                                         throw new ScoreNotFound();
@@ -549,18 +551,15 @@ public class Main {
     public static void printTrainingEmployeeCommend() {
         System.out.println("showProfile");
         System.out.println("registerStudent name username password city collegeId");
-//        System.out.println("{ department => COMPUTER , ACCOUNTING , ELECTRONIC , ELECTRICAL }");
         System.out.println("deleteStudent studentId");
         System.out.println("editStudent studentId newUsername newPassword");
         System.out.println("registerProfessor name username password degree office collegeId");
-//        System.out.println("{ status => SCIENCE_COMMITTEE , TUITION_FEE}");
         System.out.println("deleteProfessor professorId");
         System.out.println("editProfessor professorId newUsername newPassword");
         System.out.println("registerTrainingEmployee name username password collegeId");
         System.out.println("deleteTrainingEmployee TrainingEmployeeId");
         System.out.println("editTrainingEmployee TrainingEmployeeId newUsername newPassword");
         System.out.println("addCourse name unit collegeId");
-//        System.out.println("{ department => COMPUTER , ACCOUNTING , ELECTRONIC , ELECTRICAL }");
         System.out.println("deleteCourse courseId");
         System.out.println("editCourse courseId newName newUnit");
         System.out.println("salary");
@@ -581,6 +580,7 @@ public class Main {
         System.out.println("selectUnit professorId courseId term");
         System.out.println("showProfessorList");
         System.out.println("showSelectedCourses");
+        System.out.println("mustSelect");
         System.out.println("help");
         System.out.println("logout");
         System.out.println("exit");

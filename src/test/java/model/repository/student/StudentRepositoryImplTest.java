@@ -1,6 +1,7 @@
 package model.repository.student;
 
 
+import controller.service.Student.StudentServiceImpl;
 import model.entity.*;
 import model.repository.college.CollegeRepositoryImpl;
 import model.repository.course.CourseRepositoryImpl;
@@ -16,6 +17,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Assertions.*;
 import org.assertj.core.api.Assertions.*;
+
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -125,13 +128,17 @@ class StudentRepositoryImplTest {
         var sec = new ScoreRepositoryImpl();
         var college = new College(null, "azad","lar");
         var student = new Student(null,"ali","44", "a", "b", college);
-        var score = new Score(null,student,null,null,1,15.0);
+        var score = new Score(null,student,
+                null,null,1,15.0);
 //        act
         collegeRepository.save(college);
         studentRepository.save(student);
         sec.save(score);
         var load = studentRepository.getStudentCourse(student.getId());
+
 //        assert
         Assertions.assertThat(load).hasSize(1);
     }
+
+
 }
