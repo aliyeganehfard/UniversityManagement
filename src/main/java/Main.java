@@ -421,7 +421,7 @@ public class Main {
                                 break;
                             case "selectUnit":
                                 try {
-                                    studentService.studentCourse(student).forEach(System.out::println);
+                                    studentService.studentCourseMustSelect(student).forEach(System.out::println);
                                 }catch (Exception e){}
 
                                 try {
@@ -458,8 +458,11 @@ public class Main {
                                     System.out.println("wrong input");
                                 }
                                 break;
+                            case "averagePoint":
+                                System.out.println(studentService.getAveragePoint(student));
+                                break;
                             case "mustSelect":
-                                studentService.studentCourse(student).forEach(System.out::println);
+                                studentService.studentCourseMustSelect(student).forEach(System.out::println);
                                 break;
                             case "showSelectedCourses":
                                 try {
@@ -580,6 +583,7 @@ public class Main {
         System.out.println("selectUnit professorId courseId term");
         System.out.println("showProfessorList");
         System.out.println("showSelectedCourses");
+        System.out.println("averagePoint");
         System.out.println("mustSelect");
         System.out.println("help");
         System.out.println("logout");

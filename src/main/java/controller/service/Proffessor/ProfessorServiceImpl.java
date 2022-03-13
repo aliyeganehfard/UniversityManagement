@@ -44,11 +44,11 @@ public class ProfessorServiceImpl extends ServiceImpl<ProfessorRepositoryImpl, P
 
     @Override
     public List<Score> setScoreForStudent(Professor professor) {
-        Predicate<Score> check = score -> score.getProfessor().getId().equals(professor.getId());
+//        Predicate<Score> check = score -> score.getProfessor().getId().equals(professor.getId());
         Predicate<Score> checkStudentScore = score -> score.getScore()==null;
         return scoreService.findAll(Score.class)
                 .stream()
-                .filter(check)
+//                .filter(check)
                 .filter(checkStudentScore)
                 .collect(Collectors.toList());
     }

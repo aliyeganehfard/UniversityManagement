@@ -11,6 +11,6 @@ import java.util.List;
 
 public interface StudentService extends StudentRepository , LoginBaseService<Student> {
     void selectUnit(Score score);
-    List<Course> studentCourse(Student student);
+    List<Course> studentCourseMustSelect(Student student);
     List<Score> getResult(Student student);
 }

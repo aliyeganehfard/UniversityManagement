@@ -10,10 +10,7 @@ import model.entity.Student;
 import model.repository.LoginBase;
 import model.repository.student.StudentRepositoryImpl;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -45,37 +42,26 @@ public class StudentServiceImpl extends ServiceImpl<StudentRepositoryImpl, Stude
     }
 
     @Override
-    public List<Course> studentCourse(Student student) {
-//        List<Course> selectedCourse =
-//                scoreService.findAll(Score.class)
-//                        .stream()
-//                        .filter(score -> score.getStudent().getUserName().equals(student.getUserName()))
-//                        .map(Score::getCourse)
-//                        .collect(Collectors.toList());
-//        List<Course> allCourse =
-//                courseService.findAll(Course.class)
-//                        .stream()
-//                        .filter(course -> course.getCollege().getId().equals(student.getCollege().getId()))
-//                        .collect(Collectors.toList());
-//        allCourse.removeAll(selectedCourse);
-//return allCourse;
-        var selected = getStudentCourse(1)
+    public List<Course> studentCourseMustSelect(Student student) {
+        var selected = getStudentCourse(student.getId())
                 .stream()
                 .map(Score::getCourse)
                 .collect(Collectors.toList());
-        System.out.println("selected");
-        selected.forEach(System.out::println);
         var all = courseService.findAll(Course.class);
-        System.out.println("all");
-        all.forEach(System.out::println);
-        System.out.println("finish");
         List<Course> list = new ArrayList<>();
         for (Course c : all) {
-            Predicate<Course> filter1 = course -> !course.getId().equals(c.getId());
             if (!selected.contains(c))
                 list.add(c);
         }
         return list;
+    }
+
+    public Double getAveragePoint(Student student){
+        return getStudentCourse(student.getId())
+                .stream()
+                .mapToDouble(Score::getScore)
+                .filter(Objects::nonNull)
+                .average().getAsDouble();
     }
 
     @Override
