@@ -310,7 +310,6 @@ public class Main {
                                 }
                                 break;
                             case "deleteCourse":
-                                System.out.println("deleteCourse courseId");
                                 try {
                                     exceptionHandler.isId(Integer.valueOf(commend[1]));
                                     course = courseService.findById(Course.class, Integer.valueOf(commend[1]));
@@ -326,15 +325,15 @@ public class Main {
                                 }
                                 break;
                             case "editCourse":
-                                System.out.println("editCourse courseId newName newUnit");
                                 try {
                                     exceptionHandler.isId(Integer.valueOf(commend[1]));
-                                    exceptionHandler.isUnit(Integer.valueOf(commend[2]));
+                                    exceptionHandler.isUnit(Integer.valueOf(commend[3]));
                                     course = courseService.findById(Course.class, Integer.valueOf(commend[1]));
                                     if (course == null)
                                         throw new CourseNotFound();
                                     course.setName(commend[2]);
                                     course.setUnit(Integer.valueOf(commend[3]));
+                                    courseService.update(course);
                                 } catch (UnitException unitException) {
                                     System.out.println("incorrect unit");
                                 } catch (IdException idException) {
@@ -342,6 +341,7 @@ public class Main {
                                 } catch (CourseNotFound courseNotFound) {
                                     System.out.println("course not found");
                                 } catch (Exception e) {
+                                    e.printStackTrace();
                                     System.out.println("wrong input");
                                 }
                                 break;
@@ -459,7 +459,9 @@ public class Main {
                                 }
                                 break;
                             case "averagePoint":
-                                System.out.println(studentService.getAveragePoint(student));
+                                try{
+                                    System.out.println(studentService.getAveragePoint(student));
+                                }catch (Exception e){}
                                 break;
                             case "mustSelect":
                                 studentService.studentCourseMustSelect(student).forEach(System.out::println);
@@ -595,7 +597,6 @@ public class Main {
         System.out.println("showCourses");
         System.out.println("showStudent");
         System.out.println("setScore scoreId score");
-        System.out.println("showSalary term");
         System.out.println("showWaitingStudentForeScore");
         System.out.println("help");
         System.out.println("logout");

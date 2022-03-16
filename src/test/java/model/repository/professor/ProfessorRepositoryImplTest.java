@@ -113,17 +113,4 @@ class ProfessorRepositoryImplTest {
         );
     }
 
-    @Test
-    void getProfessorCourses() {
-//        arrange
-        var sec = new ScoreRepositoryImpl();
-        var professor = new Professor(null, "ali", "12", "123", "b", "a", null);
-        var score = new Score(null,null, professor,null, 1, 15.0);
-//        act
-        professorRepository.save(professor);
-        sec.save(score);
-        var load = professorRepository.getProfessorCourse(professor.getId());
-//        assert
-        Assertions.assertThat(load).hasSize(1);
-    }
 }

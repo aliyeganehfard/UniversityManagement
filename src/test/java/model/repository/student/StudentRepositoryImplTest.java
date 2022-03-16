@@ -122,22 +122,5 @@ class StudentRepositoryImplTest {
         );
     }
 
-    @Test
-    void getStudentCourse() {
-//        arrange
-        var sec = new ScoreRepositoryImpl();
-        var college = new College(null, "azad", "lar");
-        var student = new Student(null, "ali", "44", "a", "b", college);
-        var score = new Score(null, student,
-                null, null, 1, 15.0);
-//        act
-        collegeRepository.save(college);
-        studentRepository.save(student);
-        sec.save(score);
-        var load = studentRepository.getStudentCourse(student.getId());
-
-//        assert
-        Assertions.assertThat(load).hasSize(1);
-    }
 
 }
